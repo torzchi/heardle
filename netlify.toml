@@ -1,7 +1,0 @@
-[build]
-  #command = "npm run build" 
-  # comanda pentru a construi proiectul dvs.
-
-  publish = "public" # directorul pentru fișierele statice
-
-
