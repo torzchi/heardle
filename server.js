@@ -1,26 +1,42 @@
-// Importăm modulul http pentru a crea serverul
-const http = require('http');
-const fs = require('fs'); // Modulul fs (file system) este folosit pentru a citi fișiere
+const express = require('express');
+const mongoose = require('mongoose');
+const Movie = require('./public/model/movie.js'); // Adjust the path as needed
 
-// Definim portul pe care serverul nostru va asculta
-const port = process.env.PORT || 3025;
+const app = express();
+const port = 3025;
 
-// Creăm un server HTTP
-const server = http.createServer((req, res) => {
-    // Citim fișierul HTML
-    fs.readFile('public/index.html', (err, data) => {
-        if (err) {
-            res.writeHead(500, {'Content-Type': 'text/plain'});
-            res.end('Internal Server Error');
-        } else {
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(data); // Trimitem conținutul fișierului HTML către client
-        }
+// MongoDB connection URI
+const uri = 'mongodb+srv://torzchi:torzchi@songs.nd1vmat.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=songs';
+
+
+
+// Connect to MongoDB
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(error => {
+        console.error('Error connecting to MongoDB:', error);
     });
+
+// Define an API endpoint to fetch movies
+app.get('/api/movies', async (req, res) => {
+  try {
+    // Ensure the MongoDB client is connected before executing database operations
+    const movies = await Movie.find().limit(10);
+
+      res.json(movies);
+  } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ error: error.message }); // Send the actual error message
+  }
 });
 
-// Ascultăm pe portul definit și afișăm un mesaj când serverul este pornit
-server.listen(port, () => {
-    console.log(`Serverul rulează la adresa http://localhost:${port}/`);
-});
 
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
