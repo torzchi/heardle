@@ -1,14 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Movie = require('./public/model/movie.js'); // Adjust the path as needed
+require('dotenv').config();
+
 
 const app = express();
 const port = 3025;
 
 // MongoDB connection URI
-const uri = 'mongodb+srv://torzchi:torzchi@songs.nd1vmat.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=songs';
 
-
+const uri = process.env.mongodb_uri;
 
 // Connect to MongoDB
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
