@@ -4,7 +4,7 @@ const Movie = require('../model/movie');
 
 
 // MongoDB connection URI
-const uri = 'mongodb+srv://torzchi:torzchi@songs.nd1vmat.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=songs';
+
 
 
 

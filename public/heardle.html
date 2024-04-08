@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heardle</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link your CSS file here -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Audio Player</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Heardle</h1>
-        <p>Can you guess the song?</p>
-    </header>
-    
-    <div id="game-container">
-        <audio id="audioPlayer" controls>
-            <source src="" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <div id="guess-container">
-            <input type="text" id="guessInput" placeholder="Enter your guess">
-            <button id="submitGuess">Submit</button>
-        </div>
-        <p id="result"></p>
-    </div>
 
-    <footer>
-        <p>&copy; 2024 Heardle Game. All rights reserved.</p>
-    </footer>
+<div class="container">
+    <h1>Random Audio Player</h1>
+    <button id="playButton">Play Random Song</button>
+    <audio id="audioPlayer" controls>
+        Your browser does not support the audio element.
+    </audio>
+</div>
 
-    <script src="script.js"></script> <!-- Link your JavaScript file here -->
+<script src="js/musicfetch.js"></script>
 </body>
 </html>

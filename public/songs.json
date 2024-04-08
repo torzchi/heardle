@@ -1,0 +1,12 @@
+{
+  "songs": [
+    {
+      "name": "7years",
+      "path": "./songs/7years.mp3"
+    },
+    {
+      "name": "sasha killed himself",
+      "path": "./songs/sasha killed himself.mp3"
+    }
+  ]
+}
