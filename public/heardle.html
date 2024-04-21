@@ -15,6 +15,10 @@
         Your browser does not support the audio element.
     </audio>
     <div id="guessContainer">
+        <label for="guessInput">Guess the song:</label>
+        <input type="text" id="guessInput" placeholder="Enter your guess" list="songSuggestions">
+        <datalist id="songSuggestions"></datalist>
+        <button id="guessButton">Submit</button>
     </div>
     <div id="resultText"></div>
 </div>

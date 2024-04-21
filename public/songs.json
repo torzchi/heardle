@@ -1,12 +1,24 @@
 {
   "songs": [
     {
-      "name": "7years",
-      "path": "./songs/7years.mp3"
+      "name": "7 Years - Lukas Graham",
+      "path": "./songs/7 Years - Lukas Graham.mp3"
     },
     {
-      "name": "sasha killed himself",
-      "path": "./songs/sasha killed himself.mp3"
+      "name": "draft 001 - 9tails",
+      "path": "./songs/draft 001 - 9tails.mp3"
+    },
+    {
+      "name": "Like That - Future",
+      "path": "./songs/Like That - Future.mp3"
+    },
+    {
+      "name": "Runaway - Kanye West",
+      "path": "./songs/Runaway - Kanye West.mp3"
+    },
+    {
+      "name": "sasha killed himself - convolk",
+      "path": "./songs/sasha killed himself - convolk.mp3"
     }
   ]
 }

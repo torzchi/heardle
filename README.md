@@ -1,2 +1,8 @@
 # heardle type game
-ffmpeg -> from .mp3 to .pcm -> byte shards in mongodb -> fetch from api -> reassamble -> web player 
+TODO:
+make sure songs dont repeat
+add css
+login
+leaderboard
+trims songs in 5-10~ sec intervals
+add strikes/disqualification conditions

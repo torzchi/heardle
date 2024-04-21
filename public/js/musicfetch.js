@@ -15,6 +15,7 @@ function fetchSongsAndPlayRandom() {
   .then(data => {
       var songs = data.songs;
       if (songs.length > 0) {
+          console.log(songs)
           var randomIndex = Math.floor(Math.random() * songs.length);
           var randomSong = songs[randomIndex];
           var audioPlayer = document.getElementById('audioPlayer');

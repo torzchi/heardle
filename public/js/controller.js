@@ -1,11 +1,27 @@
-// gameController.js
+// controller.js
 
 let currentSong;
 let guessInput; // Declare guessInput variable outside the function
+let songNames = []; // Store song names fetched from songs.json
 
 function startGame() {
+    fetchSongNames(); // Fetch song names when the game starts
     fetchSongsAndPlayRandom();
     createGuessInput(); // Create guess input box when the game starts
+}
+
+function fetchSongNames() {
+    fetch('./songs.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.status + ' ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            songNames = data.songs.map(song => song.name);
+        })
+        .catch(error => console.error('Error fetching song names:', error));
 }
 
 function fetchSongsAndPlayRandom() {
@@ -36,18 +52,31 @@ function playSong(songPath) {
 }
 
 function createGuessInput() {
-    guessInput = document.createElement('input');
-    guessInput.type = 'text';
-    guessInput.id = 'guessInput';
-    guessInput.placeholder = 'Enter your guess';
+    guessInput = document.getElementById('guessInput');
 
-    const guessButton = document.createElement('button');
-    guessButton.textContent = 'Submit';
+    guessInput.addEventListener('input', function() {
+        const inputValue = this.value.toLowerCase();
+        const suggestions = getSuggestions(inputValue);
+        updateAutocomplete(suggestions);
+    });
+
+    const guessButton = document.getElementById('guessButton');
     guessButton.addEventListener('click', checkGuess);
+}
 
-    const guessContainer = document.getElementById('guessContainer');
-    guessContainer.appendChild(guessInput);
-    guessContainer.appendChild(guessButton);
+function getSuggestions(inputValue) {
+    return songNames.filter(songName => songName.toLowerCase().includes(inputValue));
+}
+
+function updateAutocomplete(suggestions) {
+    const datalist = document.getElementById('songSuggestions');
+    datalist.innerHTML = '';
+
+    suggestions.forEach(suggestion => {
+        const option = document.createElement('option');
+        option.value = suggestion;
+        datalist.appendChild(option);
+    });
 }
 
 function checkGuess() {
@@ -57,5 +86,5 @@ function checkGuess() {
     document.getElementById('resultText').textContent = resultMessage;
 }
 
-// Start the game when the page loads
+// Start the game when the page loads   
 window.onload = startGame;
