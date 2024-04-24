@@ -4,5 +4,6 @@
 # add css
 # login
 # leaderboard
-# trims songs in 5-10~ sec intervals
-# add strikes/disqualification conditions
+# ~~trims songs in 5-10 sec intervals~~
+# ~~add strikes/disqualification conditions~~
+
