@@ -11,6 +11,9 @@ body {
     font-weight: 400;
     font-style: normal;
   }
+  #audioPlayer::-webkit-media-controls-time-remaining-display {
+    display: none;
+}
 
 .container {
     font-family: "Jersey 10", sans-serif;
