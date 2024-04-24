@@ -50,10 +50,12 @@ function fetchSongsAndPlayRandom() {
 }
 
 function playSong(songPath) {
+
+
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.src = songPath;
 
-
+    audioPlayer.volume = 0.1;
     audioPlayer.setAttribute('controlsList', 'nodownload');
 
     // Add an event listener for the timeupdate event
@@ -65,7 +67,7 @@ function playSong(songPath) {
             event.target.currentTime = 0;
         }
     });
-    
+    audioPlayer.play();
 }
 
 function createGuessInput() {
