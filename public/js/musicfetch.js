@@ -1,7 +1,7 @@
 // script.js
 
 document.getElementById('playButton').addEventListener('click', function() {
-  fetchSongsAndPlayRandom();
+  playRandom()
 });
 
 function fetchSongsAndPlayRandom() {

@@ -5,6 +5,10 @@ let guessInput; // Declare guessInput variable outside the function
 let songNames = []; // Store song names fetched from songs.json
 let playbackTime = 5;
 let strikes = 0;
+let usedSongNames = [];
+let songLen;
+let isOver = 0;
+let score = 0;
 
 function startGame() {
     strikes=0;
@@ -24,11 +28,13 @@ function fetchSongNames() {
         })
         .then(data => {
             songNames = data.songs.map(song => song.name);
+            songLen = songNames.length
         })
         .catch(error => console.error('Error fetching song names:', error));
 }
 
 function fetchSongsAndPlayRandom() {
+  {
     fetch('./songs.json')
     .then(response => {
         if (!response.ok) {
@@ -38,9 +44,18 @@ function fetchSongsAndPlayRandom() {
     })
     .then(data => {
         var songs = data.songs;
+        if (usedSongNames.length === songLen) {
+            alert("Congratulations! You've guessed all the songs!");
+            startGame()
+        }
         if (songs.length > 0) {
             var randomIndex = Math.floor(Math.random() * songs.length);
             currentSong = songs[randomIndex];
+            while (usedSongNames.includes(currentSong.name) && score != songLen) {
+              randomIndex = Math.floor(Math.random() * songs.length);
+              currentSong = songs[randomIndex];
+            }
+            usedSongNames.push(currentSong.name); 
             playSong(currentSong.path);
         } else {
             alert('No songs found!');
@@ -48,6 +63,7 @@ function fetchSongsAndPlayRandom() {
     })
     .catch(error => console.error('Error fetching songs:', error));
 }
+  }
 
 function playSong(songPath) {
 
@@ -60,19 +76,21 @@ function playSong(songPath) {
 
     // Add an event listener for the timeupdate event
     audioPlayer.addEventListener('timeupdate', function(event) {
-        // Check if the current playback time exceeds 10 seconds
         if (event.target.currentTime > playbackTime) {
-            // Pause the player and reset the playback time to 0
             event.target.pause();
             event.target.currentTime = 0;
         }
     });
+    
     audioPlayer.play();
 }
 
+
+
+
+
 function createGuessInput() {
     guessInput = document.getElementById('guessInput');
-
     guessInput.addEventListener('input', function() {
         const inputValue = this.value.toLowerCase();
         const suggestions = getSuggestions(inputValue);
@@ -98,13 +116,31 @@ function updateAutocomplete(suggestions) {
     });
 }
 
+function removeSong(song)
+{
+    let songIndex = songNames.indexOf(song)
+    songNames.splice(songIndex,1)
+    console.log(song + " eliminat")
+    if (songNames.length > 0) {
+        var randomIndex = Math.floor(Math.random() * songNames.length);
+        currentSong = songNames[randomIndex];
+    }
+    
+}
+//take the logic from fetchandplay and put it into playrandom
+
 function checkGuess() {
-    const userGuess = guessInput.value.trim().toLowerCase();
     const correctAnswer = currentSong.name.toLowerCase();
+    const userGuess = guessInput.value.trim().toLowerCase();
     const resultText = document.getElementById('resultText');
+   
 
     if (userGuess === correctAnswer) {
         resultText.textContent = 'Congratulations! You guessed the song correctly.';
+        console.log(songNames)
+        removeSong(currentSong.name)
+        playSong ("./songs/" + currentSong + ".mp3")
+        score++;
     } else {
         strikes++; // Increment the number of strikes
 
@@ -121,7 +157,7 @@ function checkGuess() {
             resultText.textContent = 'Sorry, incorrect guess. You have ' + (3 - strikes) + ' strikes remaining.';
         }
     }
-    audioPlayer.play();
+    fetchSongsAndPlayRandom()
 }
 
 // Start the game when the page loads   
