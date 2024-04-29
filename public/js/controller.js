@@ -45,20 +45,24 @@ function fetchSongsAndPlayRandom() {
     })
     .then(data => {
         var songs = data.songs;
-        if (usedSongNames.length === songLen) {
+        if (score === songLen) {
             alert("Congratulations! You've guessed all the songs!");
+            location.reload()
             startGame()
         }
         if (songs.length > 0) {
             var randomIndex = Math.floor(Math.random() * songs.length);
             currentSong = songs[randomIndex];
-            while (usedSongNames.includes(currentSong.name) && score != songLen) {
+            if(score != songLen ){
+           do {
               randomIndex = Math.floor(Math.random() * songs.length);
-              currentSong = songs[randomIndex];
-            }
+              currentSong = songs[randomIndex];          
+              console.log(usedSongNames.length)
+              console.log(songNames.length)
+            }  while (usedSongNames.includes(currentSong.name) && usedSongNames.length != songLen)
             usedSongNames.push(currentSong.name); 
             playSong(currentSong.path);
-        } else {
+        }} else {
             alert('No songs found!');
         }
     })
@@ -140,7 +144,7 @@ function checkGuess() {
         resultText.textContent = 'Congratulations! You guessed the song correctly.';
         console.log(songNames)
         removeSong(currentSong.name)
-        playSong ("./songs/" + currentSong + ".mp3")
+        //playSong ("./songs/" + currentSong + ".mp3")
         score++;
         fetchSongsAndPlayRandom()
     }else if(strikes<3) {
