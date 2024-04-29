@@ -1,6 +1,6 @@
 # heardle type game
 # TODO:
-# make sure songs dont repeat
+# ~~make sure songs dont repeat~~
 # add css
 # login
 # leaderboard
