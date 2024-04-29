@@ -9,10 +9,12 @@ let usedSongNames = [];
 let songLen;
 let isOver = 0;
 let score = 0;
+let sessionScore = 0;
 
 function startGame() {
     strikes=0;
-    score = 0;
+    //score = 0;
+    sessionScore = 0
     playbackTime = 5;
     fetchSongNames(); // Fetch song names when the game starts
     fetchSongsAndPlayRandom();
@@ -46,7 +48,7 @@ function fetchSongsAndPlayRandom() {
     .then(data => {
         var songs = data.songs;
         if (score === songLen) {
-            alert("Congratulations! You've guessed all the songs!");
+            alert("Congratulations! You've guessed all the songs!" + "Your score is " + sessionScore);
             location.reload()
             startGame()
         }
@@ -57,11 +59,12 @@ function fetchSongsAndPlayRandom() {
            do {
               randomIndex = Math.floor(Math.random() * songs.length);
               currentSong = songs[randomIndex];          
-              console.log(usedSongNames.length)
-              console.log(songNames.length)
-            }  while (usedSongNames.includes(currentSong.name) && usedSongNames.length != songLen)
+              console.log(score)
+              console.log(songLen)
+            }  while (usedSongNames.includes(currentSong.name) && score != songs.length && score - sessionScore != songLen )
             usedSongNames.push(currentSong.name); 
             playSong(currentSong.path);
+            
         }} else {
             alert('No songs found!');
         }
@@ -146,13 +149,14 @@ function checkGuess() {
         removeSong(currentSong.name)
         //playSong ("./songs/" + currentSong + ".mp3")
         score++;
+        sessionScore++;
         fetchSongsAndPlayRandom()
     }else if(strikes<3) {
         strikes++; // Increment the number of strikes
 
         if (strikes === 3) {    
             // Show a popup with the game over message
-            alert('Game Over. You have reached 3 strikes.' + ' The song was : ' + currentSong.name);
+            alert('Game Over. You have reached 3 strikes.' + ' The song was : ' + currentSong.name  + "Your score is " + sessionScore);
             // Restart the game
             startGame();
             return;
