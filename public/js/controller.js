@@ -12,6 +12,7 @@ let score = 0;
 
 function startGame() {
     strikes=0;
+    score = 0;
     playbackTime = 5;
     fetchSongNames(); // Fetch song names when the game starts
     fetchSongsAndPlayRandom();
@@ -141,7 +142,8 @@ function checkGuess() {
         removeSong(currentSong.name)
         playSong ("./songs/" + currentSong + ".mp3")
         score++;
-    } else {
+        fetchSongsAndPlayRandom()
+    }else if(strikes<3) {
         strikes++; // Increment the number of strikes
 
         if (strikes === 3) {    
@@ -157,7 +159,7 @@ function checkGuess() {
             resultText.textContent = 'Sorry, incorrect guess. You have ' + (3 - strikes) + ' strikes remaining.';
         }
     }
-    fetchSongsAndPlayRandom()
+   
 }
 
 // Start the game when the page loads   
