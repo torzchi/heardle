@@ -1,8 +1,8 @@
 [build]
   #command = "npm run build" 
   # comanda pentru a construi proiectul dvs.
-  command = "node server.js"
   publish = "public" # directorul pentru fișierele statice
+  command = "node server.js"
 
 
 
