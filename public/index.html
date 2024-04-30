@@ -38,6 +38,20 @@
     footer p {
       margin: 0;
     }
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+      margin: 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #555;
+    }
   </style>
 </head>
 <body>
@@ -50,11 +64,18 @@
     <h2>About Me</h2>
     <p>i like chess</p>
   </section>
-<section>
-  <p>
-    <a id href="./heardle.html"> heardle game</a>
-  </p>
-</section>
+
+  <section>
+    <a class="button" href="./heardle.html">Play</a>
+    <a class="button" href="#">How to Play</a>
+  </section>
+
+  <section>
+    <h2>Account</h2>
+    <a class="button" href="./login.html">Login</a>
+    <a class="button" href="./register.html">Register</a>
+  </section>
+
   <section>
     <h2>Contact Me</h2>
     <p>iuliantorz@yahoo.com</p>
