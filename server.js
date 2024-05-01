@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./public/model/user.js'); // Adjust the path as needed
+const Score = require('./public/model/score.js'); // Adjust the path as needed
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs')
 require('dotenv').config();
@@ -9,7 +10,7 @@ require('dotenv').config();
 
 const app = express();
 const port =  process.env.port
-
+app.use(express.json());
 // MongoDB connection URI
 
 const uri = process.env.mongodb_uri;
@@ -49,7 +50,7 @@ app.post('/register', async (req, res) => {
         }
         
        
-    console.log('User before saving:', user); // Inspect the user object here
+    //console.log('User before saving:', user); // Inspect the user object here
     await user.save();
         res.send('User registered successfully!');
     } catch (error) {
@@ -83,6 +84,39 @@ app.post('/login', async (req, res) => {
       }
     
 });
+
+app.post('/leaderboard', async (req, res) => {
+    try {
+        await mongoose.connect(uri)
+        const { username, scor } = req.body;
+    
+        const score = new Score({
+            username: username,
+            score : scor,
+            date :  Date()
+        });
+        
+       
+    await score.save();
+        res.send('Scor salvat!');
+    } catch (error) {
+        console.error('Error registering user:', error.message);
+        res.status(500).send('An error occurred while registering the score.');
+    }
+
+});
+
+
+app.get('/leaderboard', async (req, res) => {
+    try {
+      // Query the database for scores, sort them by score in descending order, and limit to 10 results
+      const leaderboard = await Score.find().sort({ score: -1 }).limit(10);
+      res.json(leaderboard); // Send the sorted leaderboard as JSON response
+    } catch (error) {
+      console.error('Error fetching leaderboard:', error);
+      res.status(500).json({ error: 'An error occurred while fetching the leaderboard.' });
+    }
+  });
 
 
 // async function fetchDataFromMongoDB() {

@@ -48,6 +48,7 @@ function fetchSongsAndPlayRandom() {
     .then(data => {
         var songs = data.songs;
         if (score === songLen) {
+            sendScoreToLeaderboard(sessionScore)
             alert("Congratulations! You've guessed all the songs!" + "Your score is " + sessionScore);
             location.reload()
             startGame()
@@ -156,7 +157,9 @@ function checkGuess() {
 
         if (strikes === 3) {    
             // Show a popup with the game over message
+            sendScoreToLeaderboard()
             alert('Game Over. You have reached 3 strikes.' + ' The song was : ' + currentSong.name  + "Your score is " + sessionScore);
+            
             // Restart the game
             startGame();
             return;
@@ -169,6 +172,29 @@ function checkGuess() {
     }
    
 }
+function sendScoreToLeaderboard() {
+    fetch('/leaderboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username: 'test', scor: sessionScore, date: Date() })
+    })
+    
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok: ' + response.status + ' ' + response.statusText);
+        }
+        alert('Score submitted successfully!');
+      })
+      .catch(error => {
+        console.error('Error submitting score:', error);
+        alert('An error occurred while submitting the score. Please check browser console for details.');
+      });
+  }
+
+
+
 
 // Start the game when the page loads   
 window.onload = startGame;
