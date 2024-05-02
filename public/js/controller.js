@@ -19,6 +19,7 @@ function startGame() {
     fetchSongNames(); // Fetch song names when the game starts
     fetchSongsAndPlayRandom();
     createGuessInput(); // Create guess input box when the game starts
+    resultText.textContent = '';
 }
 
 function fetchSongNames() {
@@ -173,13 +174,17 @@ function checkGuess() {
    
 }
 function sendScoreToLeaderboard() {
+    const token = localStorage.getItem('token'); // Assuming you store the JWT in localStorage
+
+    if (!token) {
     fetch('/leaderboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username: 'test', scor: sessionScore, date: Date() })
+      body: JSON.stringify({ username: 'Guest', scor: sessionScore, date: Date() })
     })
+    
     
       .then(response => {
         if (!response.ok) {
@@ -191,6 +196,32 @@ function sendScoreToLeaderboard() {
         console.error('Error submitting score:', error);
         alert('An error occurred while submitting the score. Please check browser console for details.');
       });
+    }
+    else
+    {
+        const decodedToken = jwt_decode(jwt); // Assuming you are using jwt_decode library
+        const username = decodedToken.username;
+        console.log(username)
+        fetch('/leaderboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({username: username, scor: sessionScore, date: Date() })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.status + ' ' + response.statusText);
+            }
+            alert('Score submitted successfully!');
+        })
+        .catch(error => {
+            console.error('Error submitting score:', error);
+            alert('An error occurred while submitting the score. Please check browser console for details.');
+        });
+
+    }
   }
 
 

@@ -13,10 +13,11 @@
 
 <div class="container">
     <h1>Guess The Song</h1>
-    <button id="playButton">Play Random Song</button>
-    <audio id="audioPlayer" controls>
-        Your browser does not support the audio element.
-    </audio>
+    <div class="audio-player">
+        <audio id="audioPlayer" controls>
+          Your browser does not support the audio element.
+        </audio>
+      </div>
     <div id="guessContainer">
         <label for="guessInput">Guess the song:</label>
         <input type="text" id="guessInput" placeholder="Enter your guess" list="songSuggestions">

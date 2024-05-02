@@ -27,7 +27,7 @@ body {
 
 audio {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 7px;
 }
 /* styles.css */
 
@@ -88,3 +88,34 @@ input[type="text"] {
     text-align: center;
 }
 
+
+.audio-player {
+   width: 100%;  /* Set a desired width */
+    margin: 10px auto;  /* Center the player */
+    background-color: beige;  /* Light background */
+    border-radius: 5px;  /* Rounded corners */
+  }
+  
+  .audio-player::-webkit-media-controls-play-button {  /* Style play button (Chrome, Safari) */
+    background-color: #3498db;  /* Adjust color */
+    color: #fff;  /* Adjust text color */
+    border: none;
+    border-radius: 5px;  /* Rounded corners */
+  }
+  
+  .audio-player::-webkit-media-controls-paused-overlay {  /* Style pause overlay (Chrome, Safari) */
+    background-color: rgba(0, 0, 0, 0.3);  /* Semi-transparent overlay */
+  }
+  
+  .audio-player::-webkit-media-controls-timeline {  /* Style progress bar (Chrome, Safari) */
+    background-color: #ddd;  /* Adjust progress bar color */
+    height: 5px;  /* Adjust height */
+  }
+  
+  .audio-player::-webkit-media-controls-current-time {  /* Style elapsed time (Chrome, Safari) */
+    color: #3498db;  /* Adjust color */
+  }
+  
+  .audio-player::-webkit-media-controls-remaining-time {  /* Style remaining time (Chrome, Safari) */
+    color: #ccc;  /* Adjust color */
+  }

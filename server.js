@@ -4,6 +4,7 @@ const User = require('./public/model/user.js'); // Adjust the path as needed
 const Score = require('./public/model/score.js'); // Adjust the path as needed
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 
@@ -61,10 +62,10 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { username, password } = req.body;
     
         // Fetch user by email
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ username });
     
         if (!user) {
           return res.status(401).send('Invalid username or password');
@@ -74,7 +75,11 @@ app.post('/login', async (req, res) => {
     
         if (passwordsMatch) {
           // Login successful (generate session or token)
-          res.send('Login successful!');
+          const token = jwt.sign({ username }, 'secret_key', { expiresIn: '1h' });
+          //const jwt = token
+        //  localStorage.setItem('token', jwt);
+          res.sendFile(__dirname + '/public/index.html');
+
         } else {
           res.status(401).send('Invalid username or password');
         }
@@ -117,6 +122,18 @@ app.get('/leaderboard', async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching the leaderboard.' });
     }
   });
+
+
+  function verifyToken(req, res, next) {
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json({ message: 'Unauthorized' });
+  
+    jwt.verify(token.split(' ')[1], 'secret_key', (err, decoded) => {
+      if (err) return res.status(403).json({ message: 'Forbidden' });
+      req.user = decoded;
+      next();
+    });
+  }
 
 
 // async function fetchDataFromMongoDB() {
