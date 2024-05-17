@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const directoryPath = './public/songs'; // Path to the directory containing your songs
+const directoryPath = './public/songs'; 
 
 fs.readdir(directoryPath, (err, files) => {
     if (err) {
@@ -11,7 +11,7 @@ fs.readdir(directoryPath, (err, files) => {
 
     const songs = files.filter(file => file.endsWith('.mp3')).map(file => ({
         name: path.basename(file, '.mp3'),
-        path: './songs/' + file // Adjusted path to be relative to the current directory
+        path: './songs/' + file 
     }));
 
     const jsonContent = { songs };

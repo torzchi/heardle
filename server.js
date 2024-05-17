@@ -16,6 +16,7 @@ app.use(express.json());
 
 const uri = process.env.mongodb_uri;
 
+
 // Connect to MongoDB
 mongoose.connect(uri)
     .then(() => {
@@ -53,7 +54,7 @@ app.post('/register', async (req, res) => {
        
     //console.log('User before saving:', user); // Inspect the user object here
     await user.save();
-        res.send('User registered successfully!');
+    res.sendFile(__dirname + '/public/index.html');
     } catch (error) {
         console.error('Error registering user:', error.message);
         res.status(500).send('An error occurred while registering the user.');
@@ -64,7 +65,7 @@ app.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
     
-        // Fetch user by email
+        
         const user = await User.findOne({ username });
     
         if (!user) {
@@ -74,11 +75,8 @@ app.post('/login', async (req, res) => {
         const passwordsMatch = await bcrypt.compare(password, user.password);
     
         if (passwordsMatch) {
-          // Login successful (generate session or token)
-          const token = jwt.sign({ username }, 'secret_key', { expiresIn: '1h' });
-          //const jwt = token
-        //  localStorage.setItem('token', jwt);
-          res.sendFile(__dirname + '/public/index.html');
+          const token = jwt.sign({ username }, process.env.secret, { expiresIn: '1h' });
+        res.status(200).send({access_token: token})
 
         } else {
           res.status(401).send('Invalid username or password');
@@ -93,8 +91,8 @@ app.post('/login', async (req, res) => {
 app.post('/leaderboard', async (req, res) => {
     try {
         await mongoose.connect(uri)
-        const { username, scor } = req.body;
-    
+        const {username, scor } = req.body;
+       // const AuthUsername = req.user.username;
         const score = new Score({
             username: username,
             score : scor,
@@ -124,33 +122,23 @@ app.get('/leaderboard', async (req, res) => {
   });
 
 
-  function verifyToken(req, res, next) {
-    const token = req.headers.authorization;
-    if (!token) return res.status(401).json({ message: 'Unauthorized' });
-  
-    jwt.verify(token.split(' ')[1], 'secret_key', (err, decoded) => {
-      if (err) return res.status(403).json({ message: 'Forbidden' });
-      req.user = decoded;
-      next();
-    });
-  }
-
-
-// async function fetchDataFromMongoDB() {
-//     try {
-//         // Fetch data from MongoDB
-//         const users = await User.find().limit(10);
-//         console.log('Users:');
-//         console.log(users);
-//     } catch (error) {
-//         console.error('Error fetching data from MongoDB:', error);
-//     } finally {
-//         // Disconnect from MongoDB after fetching data
-//         mongoose.disconnect();
-//     }
-// }
-
-// fetchDataFromMongoDB();
+  function authenticateToken(req, res, next) {
+    //console.log("start authenticateToken")
+    const authHeader = req.headers['authorization']
+    // Authorization: Bearer <JWT_ACCESS_TOKEN>
+    // curl --header "Authorization: Bearer eyJhbGciOi..." --request GET http://localhost:3000/exemplu
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.sendStatus(401)
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    if (err) {
+    console.log(err.message);
+    return res.sendStatus(403) // Forbidden
+    }
+    console.log(user);
+    req.user = user
+    next()
+    })
+   }
 
 
 

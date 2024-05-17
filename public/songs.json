@@ -1,8 +1,8 @@
 {
   "songs": [
     {
-      "name": "7 Years - Lukas Graham",
-      "path": "./songs/7 Years - Lukas Graham.mp3"
+      "name": "Bohemian Rhapsody - Queen",
+      "path": "./songs/Bohemian Rhapsody - Queen.mp3"
     },
     {
       "name": "draft 001 - 9tails",
@@ -13,8 +13,20 @@
       "path": "./songs/Hai hai cu tresioara - Liviu Vasilica.mp3"
     },
     {
+      "name": "HUMBLE - Kendrick Lamar",
+      "path": "./songs/HUMBLE - Kendrick Lamar.mp3"
+    },
+    {
       "name": "Like That - Future",
       "path": "./songs/Like That - Future.mp3"
+    },
+    {
+      "name": "Not Like Us - Kendrick Lamar",
+      "path": "./songs/Not Like Us - Kendrick Lamar.mp3"
+    },
+    {
+      "name": "One Last Breath - Creed",
+      "path": "./songs/One Last Breath - Creed.mp3"
     },
     {
       "name": "Runaway - Kanye West",
@@ -23,6 +35,10 @@
     {
       "name": "sasha killed himself - convolk",
       "path": "./songs/sasha killed himself - convolk.mp3"
+    },
+    {
+      "name": "Sky - Playboi Carti",
+      "path": "./songs/Sky - Playboi Carti.mp3"
     }
   ]
 }

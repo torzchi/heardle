@@ -1,5 +1,4 @@
 // controller.js
-
 let currentSong;
 let guessInput; // Declare guessInput variable outside the function
 let songNames = []; // Store song names fetched from songs.json
@@ -50,7 +49,7 @@ function fetchSongsAndPlayRandom() {
         var songs = data.songs;
         if (score === songLen) {
             sendScoreToLeaderboard(sessionScore)
-            alert("Congratulations! You've guessed all the songs!" + "Your score is " + sessionScore);
+            alert("Congratulations! You've guessed all the songs!" + " Your score is " + sessionScore);
             location.reload()
             startGame()
         }
@@ -159,7 +158,7 @@ function checkGuess() {
         if (strikes === 3) {    
             // Show a popup with the game over message
             sendScoreToLeaderboard()
-            alert('Game Over. You have reached 3 strikes.' + ' The song was : ' + currentSong.name  + "Your score is " + sessionScore);
+            alert('Game Over. You have reached 3 strikes.' + ' The song was : ' + currentSong.name  + " Your score is " + sessionScore);
             
             // Restart the game
             startGame();
@@ -175,7 +174,7 @@ function checkGuess() {
 }
 function sendScoreToLeaderboard() {
     const token = localStorage.getItem('token'); // Assuming you store the JWT in localStorage
-
+    //console.log(token)
     if (!token) {
     fetch('/leaderboard', {
       method: 'POST',
@@ -199,8 +198,9 @@ function sendScoreToLeaderboard() {
     }
     else
     {
-        const decodedToken = jwt_decode(jwt); // Assuming you are using jwt_decode library
-        const username = decodedToken.username;
+        //const decodedToken = jwt_decode(jwt); // Assuming you are using jwt_decode library
+        const token = localStorage.getItem('token'); // Assuming you store the JWT in localStorage
+        const username = localStorage.getItem('AuthUser'); 
         console.log(username)
         fetch('/leaderboard', {
             method: 'POST',
