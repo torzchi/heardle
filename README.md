@@ -1,4 +1,4 @@
-https://heardle-7f6w.onrender.com
+[Try it.](https://heardle-nu.vercel.app/)
 
 # heardle type game
 # TODO:
