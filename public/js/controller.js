@@ -176,7 +176,7 @@ function sendScoreToLeaderboard() {
     const token = localStorage.getItem('token'); // Assuming you store the JWT in localStorage
     //console.log(token)
     if (!token) {
-    fetch('/leaderboard', {
+    fetch('/api/leaderboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -202,7 +202,7 @@ function sendScoreToLeaderboard() {
         const token = localStorage.getItem('token'); // Assuming you store the JWT in localStorage
         const username = localStorage.getItem('AuthUser'); 
         console.log(username)
-        fetch('/leaderboard', {
+        fetch('/api/leaderboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

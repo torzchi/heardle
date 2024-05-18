@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
     try {
         await mongoose.connect(uri)
         const { username, email, password } = req.body;
@@ -61,7 +61,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
     try {
         const { username, password } = req.body;
     
@@ -88,7 +88,7 @@ app.post('/login', async (req, res) => {
     
 });
 
-app.post('/leaderboard', async (req, res) => {
+app.post('/api/leaderboard', async (req, res) => {
     try {
         await mongoose.connect(uri)
         const {username, scor } = req.body;
@@ -110,7 +110,7 @@ app.post('/leaderboard', async (req, res) => {
 });
 
 
-app.get('/leaderboard', async (req, res) => {
+app.get('/api/leaderboard', async (req, res) => {
     try {
       // Query the database for scores, sort them by score in descending order, and limit to 10 results
       const leaderboard = await Score.find().sort({ score: -1 }).limit(10);
