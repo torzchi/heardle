@@ -1,15 +1,19 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "./server.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      { 
-        "src": "/(.*)" ,
-        "dest": "/"
-    } 
-    ]
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "./server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/server.js" }, // Route for Node.js API requests
+    { "handle": "filesystem" },
+    { "src": "/public/(.*)", "dest": "/public/$1" }, // Route for static assets
+    { "src": "/(.*)", "dest": "/public/$1" } // Default route for other requests
+  ]
+}
