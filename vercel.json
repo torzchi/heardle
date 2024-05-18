@@ -11,9 +11,9 @@
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/server.js" }, // Route for Node.js API requests
+    { "src": "/api/(.*)", "dest": "/server.js" },
     { "handle": "filesystem" },
-    { "src": "/public/(.*)", "dest": "/public/$1" }, // Route for static assets
-    { "src": "/(.*)", "dest": "/public/$1" } // Default route for other requests
+    { "src": "/public/(.*)", "dest": "/public/$1" },
+    { "src": "/(.*)", "dest": "/public/$1" } 
   ]
 }
