@@ -9,7 +9,8 @@ let songLen;
 let isOver = 0;
 let score = 0;
 let sessionScore = 0;
-
+const audioPlayer = document.getElementById('audioPlayer');
+audioPlayer.volume = 0.1;
 function startGame() {
     strikes=0;
     //score = 0;
@@ -80,7 +81,7 @@ function playSong(songPath) {
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.src = songPath;
 
-    audioPlayer.volume = 0.1;
+    
     audioPlayer.setAttribute('controlsList', 'nodownload');
 
     // Add an event listener for the timeupdate event
